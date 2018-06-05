@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://elementos.webscraping_ws.web.br/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="webscraping_WS" targetNamespace="http://elementos.webscraping_ws.web.br/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://localhost:7070/webscraping_WS/webscraping_WS?xsd=1" namespace="http://elementos.webscraping_ws.web.br/" />
+    </xsd:schema>
+  </types>
+  <message name="tag">
+    <part name="parameters" element="tns:tag" />
+  </message>
+  <message name="tagResponse">
+    <part name="parameters" element="tns:tagResponse" />
+  </message>
+  <message name="copa_select">
+    <part name="parameters" element="tns:copa_select" />
+  </message>
+  <message name="copa_selectResponse">
+    <part name="parameters" element="tns:copa_selectResponse" />
+  </message>
+  <message name="feednews">
+    <part name="parameters" element="tns:feednews" />
+  </message>
+  <message name="feednewsResponse">
+    <part name="parameters" element="tns:feednewsResponse" />
+  </message>
+  <message name="tabelabr">
+    <part name="parameters" element="tns:tabelabr" />
+  </message>
+  <message name="tabelabrResponse">
+    <part name="parameters" element="tns:tabelabrResponse" />
+  </message>
+  <portType name="webscraping_WS">
+    <operation name="tag">
+      <input wsam:Action="http://elementos.webscraping_ws.web.br/webscraping_WS/tagRequest" message="tns:tag" />
+      <output wsam:Action="http://elementos.webscraping_ws.web.br/webscraping_WS/tagResponse" message="tns:tagResponse" />
+    </operation>
+    <operation name="copa_select">
+      <input wsam:Action="http://elementos.webscraping_ws.web.br/webscraping_WS/copa_selectRequest" message="tns:copa_select" />
+      <output wsam:Action="http://elementos.webscraping_ws.web.br/webscraping_WS/copa_selectResponse" message="tns:copa_selectResponse" />
+    </operation>
+    <operation name="feednews">
+      <input wsam:Action="http://elementos.webscraping_ws.web.br/webscraping_WS/feednewsRequest" message="tns:feednews" />
+      <output wsam:Action="http://elementos.webscraping_ws.web.br/webscraping_WS/feednewsResponse" message="tns:feednewsResponse" />
+    </operation>
+    <operation name="tabelabr">
+      <input wsam:Action="http://elementos.webscraping_ws.web.br/webscraping_WS/tabelabrRequest" message="tns:tabelabr" />
+      <output wsam:Action="http://elementos.webscraping_ws.web.br/webscraping_WS/tabelabrResponse" message="tns:tabelabrResponse" />
+    </operation>
+  </portType>
+  <binding name="webscraping_WSPortBinding" type="tns:webscraping_WS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="tag">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="copa_select">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="feednews">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="tabelabr">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="webscraping_WS">
+    <port name="webscraping_WSPort" binding="tns:webscraping_WSPortBinding">
+      <soap:address location="http://localhost:7070/webscraping_WS/webscraping_WS" />
+    </port>
+  </service>
+</definitions>

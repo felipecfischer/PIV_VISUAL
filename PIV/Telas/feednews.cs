@@ -27,28 +27,35 @@ namespace PIV.Telas
         private void btBusca_Click(object sender, EventArgs e)
         {
             FeedNews obj;
-            String tag = "gazetaesportiva_" + txtBuscar.Text.Trim().ToLower();
+            List<FeedNews> coll_result = new List<FeedNews>();
+
+            String coll;
             ponteiro_img = 0;
             news = new List<FeedNews>();
 
+            IMongoCollection<FeedNews> coll_news;
             if (txtBuscar.Text.ToLower() != "noticias")
-                tag = "gazetaesportiva_search_" + RemoverAcentos(txtBuscar.Text.ToLower()).Replace(" ","-");
-
-            IMongoCollection<FeedNews> coll_news = conn.db.GetCollection<FeedNews>(tag);
-
-            var p3 = coll_news.AsQueryable<FeedNews>()
-                                    .OrderBy(c => c._id)
-                                    .ToList();
-            if (p3.Count == 0)
             {
-                txtDetalhes.Text = "Nenhum resultado encontrado!";
-                lbTitulo.Text    = "Nenhum resultado encontrado!";
+                coll = "gazetaesportiva_search_tag";
+                coll_news = conn.db.GetCollection<FeedNews>(coll);
+                coll_result = coll_news.AsQueryable<FeedNews>()
+                                            .Where(c => c.tag == RemoverAcentos(txtBuscar.Text.Trim().ToLower()))
+                                            .OrderBy(c => c._id)
+                                            .ToList();
             }
             else
-            {
-                foreach (var f in p3)
-                {
+            { 
+                coll = "gazetaesportiva_noticias";
+                coll_news = conn.db.GetCollection<FeedNews>(coll);
+                coll_result = coll_news.AsQueryable<FeedNews>()
+                                .OrderBy(c => c._id)
+                                .ToList();
+            }
 
+            if (coll_result.Count > 0)
+            {
+                foreach (var f in coll_result)
+                {
                     obj = new FeedNews();
                     obj._id = f._id;
                     obj.categoria = f.categoria;
@@ -61,17 +68,28 @@ namespace PIV.Telas
                 }
                 display_news();
             }
+            else
+            {
+                txtDetalhes.Text = "Nenhum resultado encontrado!";
+                lbTitulo.Text = "Nenhum resultado encontrado!";
+            }
         }
 
         private void ts_first_Click(object sender, EventArgs e)
         {
-            ponteiro = 0;
-            display_news();          
+            if (news.Count > 0)
+            {
+                ponteiro = 0;
+                display_news();
+            }
         }
         private void ts_last_Click(object sender, EventArgs e)
         {
-            ponteiro = news.Count-1;
-            display_news();
+            if (news.Count > 0)
+            { 
+                ponteiro = news.Count-1;
+                display_news();
+            }
         }
 
         private void display_news(){
@@ -139,17 +157,15 @@ namespace PIV.Telas
         public static string RemoverAcentos(string texto)
         {
 
-            string s = texto.Normalize(NormalizationForm.FormD);
-            StringBuilder sb = new StringBuilder();
-            for (int k = 0; k < s.Length; k++)
+            StringBuilder sbReturn = new StringBuilder();
+            var arrayText = texto.Normalize(NormalizationForm.FormD).ToCharArray();
+            foreach (char letter in arrayText)
             {
-                UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(s[k]);
-                if (uc != UnicodeCategory.NonSpacingMark)
-                {
-                    sb.Append(s[k]);
-                }
+                if (System.Globalization.CharUnicodeInfo.GetUnicodeCategory(letter)
+                    != System.Globalization.UnicodeCategory.NonSpacingMark)
+                    sbReturn.Append(letter);
             }
-            return sb.ToString();
+            return sbReturn.ToString();
         }
     }
 }

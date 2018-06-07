@@ -26,16 +26,16 @@ namespace PIV.PIV_WS {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3056.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Web.Services.WebServiceBindingAttribute(Name="webscraping_WSPortBinding", Namespace="http://elementos.webscraping_ws.web.br/")]
+    [System.Web.Services.WebServiceBindingAttribute(Name="webscraping_WSPortBinding", Namespace="http://webscraping_ws.web.br/")]
     public partial class webscraping_WS : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
         private System.Threading.SendOrPostCallback tagOperationCompleted;
         
+        private System.Threading.SendOrPostCallback tabelabrOperationCompleted;
+        
         private System.Threading.SendOrPostCallback copa_selectOperationCompleted;
         
-        private System.Threading.SendOrPostCallback feednewsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback tabelabrOperationCompleted;
+        private System.Threading.SendOrPostCallback feedOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -79,16 +79,16 @@ namespace PIV.PIV_WS {
         public event tagCompletedEventHandler tagCompleted;
         
         /// <remarks/>
-        public event copa_selectCompletedEventHandler copa_selectCompleted;
-        
-        /// <remarks/>
-        public event feednewsCompletedEventHandler feednewsCompleted;
-        
-        /// <remarks/>
         public event tabelabrCompletedEventHandler tabelabrCompleted;
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://elementos.webscraping_ws.web.br/", ResponseNamespace="http://elementos.webscraping_ws.web.br/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public event copa_selectCompletedEventHandler copa_selectCompleted;
+        
+        /// <remarks/>
+        public event feedCompletedEventHandler feedCompleted;
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://webscraping_ws.web.br/", ResponseNamespace="http://webscraping_ws.web.br/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public bool tag([System.Xml.Serialization.XmlElementAttribute("tag", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] string tag1, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] int page_i) {
             object[] results = this.Invoke("tag", new object[] {
@@ -120,7 +120,39 @@ namespace PIV.PIV_WS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://elementos.webscraping_ws.web.br/", ResponseNamespace="http://elementos.webscraping_ws.web.br/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://webscraping_ws.web.br/", ResponseNamespace="http://webscraping_ws.web.br/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public bool tabelabr([System.Xml.Serialization.XmlElementAttribute("tabelabr", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] string tabelabr1, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] int ano) {
+            object[] results = this.Invoke("tabelabr", new object[] {
+                        tabelabr1,
+                        ano});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void tabelabrAsync(string tabelabr1, int ano) {
+            this.tabelabrAsync(tabelabr1, ano, null);
+        }
+        
+        /// <remarks/>
+        public void tabelabrAsync(string tabelabr1, int ano, object userState) {
+            if ((this.tabelabrOperationCompleted == null)) {
+                this.tabelabrOperationCompleted = new System.Threading.SendOrPostCallback(this.OntabelabrOperationCompleted);
+            }
+            this.InvokeAsync("tabelabr", new object[] {
+                        tabelabr1,
+                        ano}, this.tabelabrOperationCompleted, userState);
+        }
+        
+        private void OntabelabrOperationCompleted(object arg) {
+            if ((this.tabelabrCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.tabelabrCompleted(this, new tabelabrCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://webscraping_ws.web.br/", ResponseNamespace="http://webscraping_ws.web.br/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public bool copa_select([System.Xml.Serialization.XmlElementAttribute("copa_select", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] string copa_select1) {
             object[] results = this.Invoke("copa_select", new object[] {
@@ -150,64 +182,32 @@ namespace PIV.PIV_WS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://elementos.webscraping_ws.web.br/", ResponseNamespace="http://elementos.webscraping_ws.web.br/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://webscraping_ws.web.br/", ResponseNamespace="http://webscraping_ws.web.br/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool feednews([System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] int page_i) {
-            object[] results = this.Invoke("feednews", new object[] {
+        public bool feed([System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] int page_i) {
+            object[] results = this.Invoke("feed", new object[] {
                         page_i});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void feednewsAsync(int page_i) {
-            this.feednewsAsync(page_i, null);
+        public void feedAsync(int page_i) {
+            this.feedAsync(page_i, null);
         }
         
         /// <remarks/>
-        public void feednewsAsync(int page_i, object userState) {
-            if ((this.feednewsOperationCompleted == null)) {
-                this.feednewsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnfeednewsOperationCompleted);
+        public void feedAsync(int page_i, object userState) {
+            if ((this.feedOperationCompleted == null)) {
+                this.feedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnfeedOperationCompleted);
             }
-            this.InvokeAsync("feednews", new object[] {
-                        page_i}, this.feednewsOperationCompleted, userState);
+            this.InvokeAsync("feed", new object[] {
+                        page_i}, this.feedOperationCompleted, userState);
         }
         
-        private void OnfeednewsOperationCompleted(object arg) {
-            if ((this.feednewsCompleted != null)) {
+        private void OnfeedOperationCompleted(object arg) {
+            if ((this.feedCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.feednewsCompleted(this, new feednewsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://elementos.webscraping_ws.web.br/", ResponseNamespace="http://elementos.webscraping_ws.web.br/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public bool tabelabr([System.Xml.Serialization.XmlElementAttribute("tabelabr", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] string tabelabr1, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] int ano) {
-            object[] results = this.Invoke("tabelabr", new object[] {
-                        tabelabr1,
-                        ano});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void tabelabrAsync(string tabelabr1, int ano) {
-            this.tabelabrAsync(tabelabr1, ano, null);
-        }
-        
-        /// <remarks/>
-        public void tabelabrAsync(string tabelabr1, int ano, object userState) {
-            if ((this.tabelabrOperationCompleted == null)) {
-                this.tabelabrOperationCompleted = new System.Threading.SendOrPostCallback(this.OntabelabrOperationCompleted);
-            }
-            this.InvokeAsync("tabelabr", new object[] {
-                        tabelabr1,
-                        ano}, this.tabelabrOperationCompleted, userState);
-        }
-        
-        private void OntabelabrOperationCompleted(object arg) {
-            if ((this.tabelabrCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.tabelabrCompleted(this, new tabelabrCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.feedCompleted(this, new feedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -258,6 +258,32 @@ namespace PIV.PIV_WS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3056.0")]
+    public delegate void tabelabrCompletedEventHandler(object sender, tabelabrCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3056.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class tabelabrCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal tabelabrCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3056.0")]
     public delegate void copa_selectCompletedEventHandler(object sender, copa_selectCompletedEventArgs e);
     
     /// <remarks/>
@@ -284,43 +310,17 @@ namespace PIV.PIV_WS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3056.0")]
-    public delegate void feednewsCompletedEventHandler(object sender, feednewsCompletedEventArgs e);
+    public delegate void feedCompletedEventHandler(object sender, feedCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3056.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class feednewsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class feedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal feednewsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3056.0")]
-    public delegate void tabelabrCompletedEventHandler(object sender, tabelabrCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3056.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class tabelabrCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal tabelabrCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal feedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

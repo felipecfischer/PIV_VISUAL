@@ -10,8 +10,6 @@ using System.Windows.Forms;
 
 namespace PIV
 {
-    using PIV_WS;
-
     public partial class mtpiv_ws : Form
     {
         public mtpiv_ws()
@@ -127,55 +125,62 @@ namespace PIV
         private void btReload_Click(object sender, EventArgs e)
         {
             bool ok = true;
-            var ws = new webscraping_WS();
+            var ws = new PIV_WS.webscraping_WS();
             ws.Timeout = -1;
 
-            if ( txtPage.Enabled )
+            if ( !( txtPage.Enabled &&
+                    txtTag.Enabled  &&
+                    txtPageTag.Enabled &&
+                    cbBr.Enabled    &&
+                    cbCopa.Enabled ) )
             {
-                if ( Convert.ToInt32(txtPage.Text) > 0 )
+                if (txtPage.Enabled)
                 {
-                    label_inf.Text = "Carregando...";
-                    ok = ws.feednews(Convert.ToInt32(txtPage.Text));
-                }
-            }
-            else if ( txtTag.Enabled )
-            {
-                if (txtTag.Text != "")
-                {
-                    if (Convert.ToInt32(txtPageTag.Text) > 0)
+                    if (Convert.ToInt32(txtPage.Text) > 0)
                     {
                         label_inf.Text = "Carregando...";
-                        ok = ws.tag(Acent(txtTag.Text.Replace(" ", "-")), Convert.ToInt32(txtPageTag.Text));
+                        ok = ws.feed(Convert.ToInt32(txtPage.Text.Trim()));
                     }
                 }
-            }
-            else if ( cbBr.Enabled )
-            {
-                if (cbBr.SelectedItem.ToString() != "<--Selecione-->")
+                else if (txtTag.Enabled)
                 {
-                    label_inf.Text = "Carregando...";
-                    ok = ws.tabelabr(cbBr.SelectedItem.ToString(), 0);
+                    if (txtTag.Text != "")
+                    {
+                        if (Convert.ToInt32(txtPageTag.Text) > 0)
+                        {
+                            label_inf.Text = "Carregando...";
+                            ok = ws.tag(RemoverAcentos(txtTag.Text.TrimEnd()).Replace(" ","-"), Convert.ToInt32(txtPageTag.Text));
+                        }
+                    }
                 }
-            }
-            else if ( cbCopa.Enabled )
-            {
-                if (cbCopa.SelectedItem.ToString() != "<--Selecione-->")
+                else if (cbBr.Enabled)
                 {
-                    label_inf.Text = "Carregando...";
-                    ok = ws.copa_select(cbCopa.SelectedItem.ToString());
+                    if (cbBr.SelectedItem.ToString() != "<--Selecione-->")
+                    {
+                        label_inf.Text = "Carregando...";
+                        ok = ws.tabelabr(cbBr.SelectedItem.ToString(), 0);
+                    }
                 }
-            }
+                else if (cbCopa.Enabled)
+                {
+                    if (cbCopa.SelectedItem.ToString() != "<--Selecione-->")
+                    {
+                        label_inf.Text = "Carregando...";
+                        ok = ws.copa_select(cbCopa.SelectedItem.ToString());
+                    }
+                }
 
-            if (ok)
-            {
-                MessageBox.Show("Importação feita com sucesso!");
-            }
-            else
-            {
+                if (ok)
+                {
+                    MessageBox.Show("Importação feita com sucesso!");
+                }
+                else
+                {
 
-                MessageBox.Show("Houve alguma falha na importação, favor verificar com o Administrador.");
+                    MessageBox.Show("Houve alguma falha na importação, favor verificar com o Administrador.");
+                }
+                label_inf.Text = "";
             }
-            label_inf.Text = "";
         }
 
         private void btClear_Click(object sender, EventArgs e)
@@ -192,7 +197,7 @@ namespace PIV
             this.Close();
         }
         
-        private string Acent(string text)
+        private string RemoverAcentos(string text)
         {
             StringBuilder sbReturn = new StringBuilder();
             var arrayText = text.Normalize(NormalizationForm.FormD).ToCharArray();

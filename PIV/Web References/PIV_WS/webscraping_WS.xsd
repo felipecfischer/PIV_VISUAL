@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://elementos.webscraping_ws.web.br/" targetNamespace="http://elementos.webscraping_ws.web.br/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:tns="http://webscraping_ws.web.br/" targetNamespace="http://webscraping_ws.web.br/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="copa_select" type="tns:copa_select" />
   <xs:element name="copa_selectResponse" type="tns:copa_selectResponse" />
-  <xs:element name="feednews" type="tns:feednews" />
-  <xs:element name="feednewsResponse" type="tns:feednewsResponse" />
+  <xs:element name="feed" type="tns:feed" />
+  <xs:element name="feedResponse" type="tns:feedResponse" />
   <xs:element name="tabelabr" type="tns:tabelabr" />
   <xs:element name="tabelabrResponse" type="tns:tabelabrResponse" />
   <xs:element name="tag" type="tns:tag" />
   <xs:element name="tagResponse" type="tns:tagResponse" />
+  <xs:complexType name="feed">
+    <xs:sequence>
+      <xs:element name="page_i" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="feedResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="tabelabr">
     <xs:sequence>
       <xs:element minOccurs="0" name="tabelabr" type="xs:string" />
@@ -25,16 +35,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="copa_selectResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="feednews">
-    <xs:sequence>
-      <xs:element name="page_i" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="feednewsResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:boolean" />
     </xs:sequence>
